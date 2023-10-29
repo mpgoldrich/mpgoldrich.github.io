@@ -1,0 +1,62 @@
+---
+title: "Instacart Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+
+library(p8105.datasets)
+data("instacart")
+
+instacart = 
+  instacart |> 
+  as_tibble()
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Barplot: Most Ordered Products in the Fresh Fruit Aisle (n > 2000)
+
+```{r}
+instacart |> 
+  filter(aisle == "fresh fruits") |> 
+  count(product_name) |> 
+  filter(n > 2000) |> 
+  mutate(product_name = fct_reorder(product_name, n)) |> 
+  plot_ly(x = ~product_name, y = ~n, color = ~product_name, 
+          type = "bar", colors = "viridis")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Scatterplot: Number of Items Ordered by Aisle
+
+```{r}
+instacart |> 
+  count(aisle) |> 
+  filter(n > 10000) |> 
+  mutate(aisle = fct_reorder(aisle, n)) |>
+  plot_ly(
+    x = ~aisle, y = ~n, type = "scatter", mode = "markers")
+```
+
+### Boxplot: Order Time of Day by Selected Departments
+
+```{r}
+instacart |>
+  filter(
+    department %in%
+      c("alcohol", "bakery", "deli", "frozen", "snacks", "produce")) |> 
+  mutate(department = fct_reorder(department, order_hour_of_day)) |> 
+  plot_ly(y = ~order_hour_of_day, color = ~department, 
+          type = "box", colors = "viridis")
+```
+
