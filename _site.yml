@@ -3,11 +3,14 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: about.html
+    - text: "Experience"
+      href: experience.html
     - icon: fa-envelope fa-lg
-      href: mailto:<you@youremail.com>
+      href: mailto:<mpg2166@cumc.columbia.edu>
+    - icon: fa-brands fa-linkedin
+      href: https://www.linkedin.com/in/madison-goldrich-920327149/
     - icon: fa-github fa-lg
-      href: http://github.com/<YOUR_GH_NAME>/
+      href: http://github.com/mpgoldrich/
 output:
-  html_document
+  html_document:
+    theme: darkly
